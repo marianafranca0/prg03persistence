@@ -5,8 +5,30 @@ Click nbfs://nbhost/SystemFileSystem/Templates/XML/XMLDocument.xml to edit this 
 -->
 
 
-
 <root>
+
+ <persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" version="2.2">
+  <persistence-unit name="meuPU" transaction-type="RESOURCE_LOCAL">
+  
+    
+    <properties>
+      // Conexão com banco MySQL
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/cursos?useSSL=false&amp;serverTimezone=UTC"/>
+      <property name="javax.persistence.jdbc.user" value="root"/> <!-- altere se necessário -->
+      <property name="javax.persistence.jdbc.password" value="1012"/>  <!-- insira sua senha -->
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+
+      // Configurações Hibernate
+      <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
+      <property name="hibernate.hbm2ddl.auto" value="update"/>
+      <property name="hibernate.show_sql" value="true"/>
+    </properties>
+    
+    <class>br.com.ifba.curso.entity.Curso</class>
+
+    
+  </persistence-unit>
+</persistence>
 
 </root>
 
