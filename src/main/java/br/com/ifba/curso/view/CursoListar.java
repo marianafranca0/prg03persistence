@@ -12,17 +12,19 @@ package br.com.ifba.curso.view;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel; // importação para manipular a tabela
-import jakarta.persistence.*;
 import java.util.List;
+import br.com.ifba.curso.dao.CursoDao;
 import br.com.ifba.curso.entity.Curso;
 import br.com.ifba.CursoSave;
 
 
 public class CursoListar extends JFrame {
     
-        private JTable tabela;
-        private DefaultTableModel modelo;
-
+    private final JTable tabela;
+    private final DefaultTableModel modelo;
+      
+    private final CursoDao dao = new CursoDao();
+    
     public CursoListar() {
         
         // definição do frame
@@ -52,104 +54,32 @@ public class CursoListar extends JFrame {
         scrollPane.setBounds(20, 70, 550, 280);
         add(scrollPane);
 
-       // carregarCursos();
-
-       
-       // BOTÕES DE AÇÃO -----------------
-        btnRemover.addActionListener(e -> {
-            int linha = tabela.getSelectedRow();
-            if (linha == -1) {
-                JOptionPane.showMessageDialog(this, "Selecione um curso.");
-                return;
-            }
-
-            Long id = (Long) modelo.getValueAt(linha, 0);
-
-            EntityManagerFactory emf = Persistence.createEntityManagerFactory("meuPU");
-            EntityManager em = emf.createEntityManager();
-
-            try {
-                Curso curso = em.find(Curso.class, id);
-                int confirmar = JOptionPane.showConfirmDialog(this,
-                    "Remover o curso \"" + curso.getNome() + "\"?",
-                    "Confirmação", JOptionPane.YES_NO_OPTION);
-
-                if (confirmar == JOptionPane.YES_OPTION) {
-                    em.getTransaction().begin();
-                    em.remove(curso);
-                    em.getTransaction().commit();
-                    modelo.removeRow(linha);
-                    JOptionPane.showMessageDialog(this, "Curso removido!");
-                }
-
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Erro: " + ex.getMessage());
-            } finally {
-                em.close();
-                emf.close();
-            }
-        });
-
-        btnEditar.addActionListener(e -> {
-            int linha = tabela.getSelectedRow();
-            if (linha == -1) {
-                JOptionPane.showMessageDialog(this, "Selecione um curso.");
-                return;
-            }
-
-            Long id = (Long) modelo.getValueAt(linha, 0);
-            EntityManagerFactory emf = Persistence.createEntityManagerFactory("meuPU");
-            EntityManager em = emf.createEntityManager();
-
-            try {
-                Curso curso = em.find(Curso.class, id);
-                String novoNome = JOptionPane.showInputDialog("Nome:", curso.getNome());
-                String novoSemestre = JOptionPane.showInputDialog("Semestres:", curso.getSemestres());
-
-                if (novoNome != null && novoSemestre != null) {
-                    em.getTransaction().begin();
-                    curso.setNome(novoNome);
-                    curso.setSemestres(Integer.parseInt(novoSemestre));
-                    em.merge(curso);
-                    em.getTransaction().commit();
-
-                    modelo.setValueAt(novoNome, linha, 1);
-                    modelo.setValueAt(Integer.parseInt(novoSemestre), linha, 2);
-                    JOptionPane.showMessageDialog(this, "Curso atualizado!");
-                }
-
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Erro: " + ex.getMessage());
-            } finally {
-                em.close();
-                emf.close();
-            }
-        });
-
+        carregarCursos();
+      
         setVisible(true);
     }
 
     // método
     private void carregarCursos() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("meuPU");
-        EntityManager em = emf.createEntityManager();
-
-        List<Curso> cursos = em.createQuery("SELECT c FROM Curso c", Curso.class).getResultList();
-
+      modelo.setRowCount(0);
+      try{
+       List<Curso> cursos = dao.findAll();
         for (Curso c : cursos) {
             modelo.addRow(new Object[]{c.getId(), c.getNome(), c.getSemestres()});
         }
-
-        em.close();
-        emf.close();
+    }catch(Exception e) {
+         e.printStackTrace();
+         JOptionPane.showMessageDialog(this,"erro!!!" + e.getMessage());
     }
-    
+    }
 
-    // exibe a tela
-     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new CursoListar());
+    public static void main(String[] args) {
+    SwingUtilities.invokeLater(() -> new CursoListar());
 }
-}
+    }
+      
+   
+
 
 
 

@@ -9,18 +9,22 @@ package br.com.ifba.curso.entity;
  * @author waria
  */
 
-import jakarta.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import br.com.ifba.infrastructure.entity.PersistenceEntity;
 
 @Entity
-public class Curso {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class Curso extends PersistenceEntity {
+  
     private Long id;
 
     private String nome;
     private int semestres;
 
     // Getters e setters
+    @Override
     public Long getId() { 
         return id; 
     }

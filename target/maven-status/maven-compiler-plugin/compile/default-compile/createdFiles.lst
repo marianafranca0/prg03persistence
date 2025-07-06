@@ -1,3 +1,9 @@
+br\com\ifba\infrastructure\dao\GenericDao.class
+br\com\ifba\curso\view\CursoListar.class
+br\com\ifba\CursoSave$1.class
+br\com\ifba\infrastructure\entity\PersistenceEntity.class
+br\com\ifba\curso\dao\CursoDao.class
+br\com\ifba\infrastructure\dao\GenericIDao.class
 br\com\ifba\CursoSave.class
 br\com\ifba\curso\entity\Curso.class
-br\com\ifba\curso\view\CursoListar.class
+br\com\ifba\curso\dao\CursoIDao.class
