@@ -4,41 +4,17 @@
  */
 package br.com.ifba.curso.dao;
 
-import java.util.List;
+import br.com.ifba.curso.entity.Curso;
+import br.com.ifba.infrastructure.dao.GenericDao;
 
 /**
  *
  * @author waria
  */
-public class CursoDao implements CursoIDao {
+public class CursoDao extends GenericDao<Curso> implements CursoIDao {
     public CursoDao() {
-        super(); {
+        super(); 
     
-}
-    }
 
-    @Override
-    public void save(Object entity) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public void update(Object entity) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public void delete(Object entity) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public Object findById(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public List findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

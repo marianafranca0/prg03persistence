@@ -9,45 +9,67 @@ package br.com.ifba.infrastructure.dao;
  * @author waria
  */
 
-import br.com.ifba.curso.entity.Curso;
 import br.com.ifba.infrastructure.entity.PersistenceEntity;
 import javax.persistence.*;
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
-public class GenericDao<T extends PersistenceEntity> {
+// Classe que encapsula operações de ACESSO ao banco de dados
+// ** Para qualquer entidade do sistema **
+//-----------------------------------------------------------
+@SuppressWarnings("unchecked")
+public class GenericDao<Entity extends PersistenceEntity> 
+        implements GenericIDao<Entity> {
      
-    private static final EntityManagerFactory emf =
-        Persistence.createEntityManagerFactory("gerenciamento_cursos");
-    private static final EntityManager em = emf.createEntityManager();
-
-
-      private final Class<T> typeClass = null;
-
+        protected static EntityManager entityManager;
     
-       public void save(T entity) {
-        em.getTransaction().begin();
-        em.persist(entity);
-        em.getTransaction().commit();
+        static{
+           EntityManagerFactory factory = Persistence.createEntityManagerFactory("gerenciamento_cursos");
+           entityManager = factory.createEntityManager();
+    }
+   
+        @Override 
+        public Entity save(Entity entity) {
+        entityManager.getTransaction().begin();
+        entityManager.persist(entity);
+        entityManager.getTransaction().commit();
+        return entity;
+    }
+        @Override
+        public Entity update(Entity entity) {
+        entityManager.getTransaction().begin();
+        entityManager.merge(entity);
+        entityManager.getTransaction().commit();
+        return entity;
     }
 
-    public void update(T entity) {
-        em.getTransaction().begin();
-        em.merge(entity);
-        em.getTransaction().commit();
+        @Override
+        public void delete(Entity entity) {
+        entity = findById(entity.getId());
+        entityManager.getTransaction().begin();
+        entityManager.remove(entity);
+        entityManager.getTransaction().commit();    
     }
-
-    public void delete(T entity) {
-        em.getTransaction().begin();
-        em.remove(em.contains(entity) ? entity : em.merge(entity));
-        em.getTransaction().commit();
+    /**
+     *
+     * @return
+     */
+        @Override
+        public List<Entity> findAll(){
+            return entityManager.createQuery("from " + getTypeClass().getSimpleName()).getResultList();
     }
-
-    public T findById(Long id) {
-        return em.find(typeClass, id);
+    /**
+     *
+     * @param id
+     * @return
+     */
+        @Override
+        public Entity findById(Long id){
+           return (Entity) entityManager.find(getTypeClass(), id);
     }
-
-    public List<T> findAll() {
-        return em.createQuery("FROM " + typeClass.getSimpleName(), typeClass).getResultList();
+        protected Class<?> getTypeClass() {
+            Class <?> classe = (Class<?>) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+            return classe;
     }
 }
 

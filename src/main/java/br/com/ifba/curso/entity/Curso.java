@@ -10,37 +10,39 @@ package br.com.ifba.curso.entity;
  */
 
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import br.com.ifba.infrastructure.entity.PersistenceEntity;
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Table;
 
 @Entity
-public class Curso extends PersistenceEntity {
+@Table(name="curso")
+public class Curso extends PersistenceEntity implements Serializable {
   
-    private Long id;
-
+   @Column(nullable = false)
     private String nome;
+
+    @Column(nullable = false)
     private int semestres;
 
-    // Getters e setters
-    @Override
-    public Long getId() { 
-        return id; 
-    }
-    public String getNome() { 
+
+    public String getNome() {
         return nome;
     }
-    public void setNome(String nome) { 
-        this.nome = nome; 
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public int getSemestres() {
-        return semestres; 
+        return semestres;
     }
-    public void setSemestres(int semestres) { 
-        this.semestres = semestres; 
+
+    public void setSemestres(int semestres) {
+        this.semestres = semestres;
     }
+    
+    
 }
         
     

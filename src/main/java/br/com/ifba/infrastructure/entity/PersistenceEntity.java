@@ -11,7 +11,7 @@ package br.com.ifba.infrastructure.entity;
 
 import javax.persistence.*;
 @MappedSuperclass
-public abstract class PersistenceEntity {
+public class PersistenceEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,4 +19,9 @@ public abstract class PersistenceEntity {
     public Long getId() {
         return id;
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
 }

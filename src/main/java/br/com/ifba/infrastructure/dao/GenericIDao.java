@@ -4,18 +4,20 @@
  */
 package br.com.ifba.infrastructure.dao;
 
+import br.com.ifba.infrastructure.entity.PersistenceEntity;
+import java.util.List;
+
 /**
  *
  * @author waria
+ * @param <Entity>
  */
 
-import br.com.ifba.curso.entity.Curso;
-import java.util.List;
-
-public interface GenericIDao<T> {
-    void save(T entity);
-    void update(T entity);
-    void delete(T entity);
-    T findById(Long id);
-    List<T> findAll();
+public interface GenericIDao<Entity extends PersistenceEntity>{
+   
+    public abstract Entity save(Entity objeto);
+    public abstract Entity update(Entity objeto);
+    public abstract void delete(Entity objeto);
+    public abstract List<Entity> findAll();
+    public abstract Entity findById(Long id);
 }
