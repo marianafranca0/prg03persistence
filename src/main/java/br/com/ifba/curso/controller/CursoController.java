@@ -10,14 +10,19 @@ package br.com.ifba.curso.controller;
  */
 
 import br.com.ifba.curso.entity.Curso;
-import br.com.ifba.curso.service.CursoService;
+import br.com.ifba.curso.service.CursoIService;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 // Classe que recebe ações da VIEW e repassa para o SERVICE
 //---------------------------------------------------------
+
+@Controller
 public class CursoController implements CursoIController{
    
-    private final CursoService service = new CursoService();
+    @Autowired
+    private CursoIService service;
     
     @Override
     public Curso save(String nome, int semestres){

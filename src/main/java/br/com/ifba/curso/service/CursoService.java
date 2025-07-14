@@ -9,16 +9,21 @@ package br.com.ifba.curso.service;
  * @author waria
  */
 
-import br.com.ifba.curso.dao.CursoDao;
+import br.com.ifba.curso.dao.CursoIDao;
 import br.com.ifba.curso.entity.Curso;
 import br.com.ifba.infrastructure.util.StringUtil;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 // Classe que faz VALIDAÇÕES e contém as REGRAS DE NEGÓCIO
 //---------------------------------------------------------
+
+@Service
 public class CursoService implements CursoIService{
     
-    private final CursoDao dao = new CursoDao();
+    @Autowired
+    private CursoIDao dao;
     
     @Override
     public Curso save(String nome, int semestres){

@@ -9,11 +9,11 @@ package br.com.ifba.curso.entity;
  * @author waria
  */
 
-import javax.persistence.Entity;
+import jakarta.persistence.Entity;
 import br.com.ifba.infrastructure.entity.PersistenceEntity;
 import java.io.Serializable;
-import javax.persistence.Column;
-import javax.persistence.Table;
+import jakarta.persistence.Column;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name="curso")

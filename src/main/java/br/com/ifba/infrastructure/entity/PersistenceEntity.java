@@ -9,7 +9,7 @@ package br.com.ifba.infrastructure.entity;
  * @author waria
  */
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 @MappedSuperclass
 public class PersistenceEntity {
     @Id
