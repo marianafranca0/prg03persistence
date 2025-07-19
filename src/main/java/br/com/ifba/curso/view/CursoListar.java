@@ -13,7 +13,6 @@ package br.com.ifba.curso.view;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel; // importação para manipular a tabela
 import java.util.List;
-import br.com.ifba.curso.dao.CursoDao;
 import br.com.ifba.curso.entity.Curso;
 import br.com.ifba.curso.controller.CursoIController;
 import org.springframework.beans.factory.annotation.Autowired;

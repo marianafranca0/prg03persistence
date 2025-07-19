@@ -9,8 +9,8 @@ package br.com.ifba.curso.service;
  * @author waria
  */
 
-import br.com.ifba.curso.dao.CursoIDao;
 import br.com.ifba.curso.entity.Curso;
+import br.com.ifba.curso.repository.CursoRepository;
 import br.com.ifba.infrastructure.util.StringUtil;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ import org.springframework.stereotype.Service;
 public class CursoService implements CursoIService{
     
     @Autowired
-    private CursoIDao dao;
+    private CursoRepository repository;
     
     @Override
     public Curso save(String nome, int semestres){
@@ -36,7 +36,7 @@ public class CursoService implements CursoIService{
         Curso curso  = new Curso();
         curso.setNome(nome);
         curso.setSemestres(semestres);
-        return dao.save(curso);
+        return repository.save(curso);
     }
     
     @Override
@@ -48,21 +48,20 @@ public class CursoService implements CursoIService{
         }
         curso.setNome(nome);
         curso.setSemestres(semestres);
-        return dao.update(curso);
+        return repository.save(curso);
     }
     
     @Override
     public List<Curso> findAll(){
-        return dao.findAll();
+        return repository.findAll();
     }
     @Override
     public Curso findById(Long id){
-        return dao.findById(id);
+        return repository.findById(id).orElse(null);
     }
     @Override
     public void delete(Long id){
-        Curso curso = dao.findById(id);
-        dao.delete(curso);
+        repository.deleteById(id);
     
     }
 }
